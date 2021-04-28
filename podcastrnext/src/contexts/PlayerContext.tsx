@@ -1,4 +1,5 @@
 import {  createContext, ReactNode, useContext, useState } from "react";
+import {createGlobalStyle} from 'styled-components';
 
 type Episode = {
     title: string;
@@ -26,6 +27,10 @@ type PlayerContextData = {
     hasPrevious: boolean;
     hasNext: boolean;
 
+
+    toggleTheme:() => void;
+    theme: string;
+
 }
 
 export const PlayerContext = createContext({} as PlayerContextData);
@@ -43,6 +48,11 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLooping, setIsLooping] = useState(false);
     const [isShuffling, setIsShuffling] = useState(false);
+
+    //Darkmode
+
+    const [theme,setTheme] = useState('light');
+
 
 
 
@@ -107,7 +117,15 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
 
     }
     /*-------------------------X-----------------------Shoffle the episodes -----------------X-----------------*/
-  
+  /*-----------------------------------------Darkmode -----------------------------------------------------------*/
+
+  const toggleTheme = () =>{
+     theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
+    
+ // toggleTheme 
+  /*-------------------X---------------------Darkmode -----------------------------X------------------------------*/
+
 
     return (
       <PlayerContext.Provider value={
@@ -127,6 +145,9 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
             isShuffling,
             toggleShuffle,
             clearPlayerState,
+
+            toggleTheme,
+            theme
             }
         }>
           {children}
@@ -136,6 +157,24 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
   
 }
 
+
+
+
+export const lightTheme = {
+  body: "#F7F8FA",
+  color: "#808080"
+}
+
+export const darkTheme = {
+  body: "#15202b",
+  color: "#FFF",
+}
+
+export const GlobalStyles = createGlobalStyle `
+  body{
+      background-color:'#02028f';
+  }
+`
 
 export const usePlayer = () => {
   return useContext(PlayerContext)
