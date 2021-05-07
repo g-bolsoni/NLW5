@@ -37,6 +37,8 @@ type HomeProps = {
 
 
 export default function Home({latestEpisodes, allEpisodes }: HomeProps ) {
+
+ // COntexto
   const {playList} =  usePlayer();
 
   const episodeList = [...latestEpisodes, ...allEpisodes];
@@ -131,7 +133,11 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps ) {
                 </tbody>
               </table>
 
+             
+
         </section>
+    
+       
     </div>
   )
 }
